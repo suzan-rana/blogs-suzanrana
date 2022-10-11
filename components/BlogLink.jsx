@@ -9,13 +9,13 @@ import {
   CardContent,
 } from "@mui/material";
 // import Image from "next/image";
-import Link from "next/link";
+import Link from "next/link"; 
 
 const BlogLink = ({ file }) => {
   return (
     <Grid item xs={12} key={file.slug} marginBottom="1rem">
-      <Stack direction="row" alignItems="flex-start">
-        <CardContent>
+      <Stack direction="row" alignItems="flex-start" paddingTop='0px' >
+        <CardContent sx={{pt:'0px'}}>
           <Typography
             gutterBottom
             variant="h1"
@@ -30,7 +30,7 @@ const BlogLink = ({ file }) => {
             dolorem iste placeat ipsam fuga at accusamus fugiat, praesentium
             quibusdam ipsum.
           </Typography>
-          <CardActions>
+          <CardActions sx={{pl:'0px'}} >
             <Link href={file.slug}>Read more</Link>
           </CardActions>
         </CardContent>
@@ -46,12 +46,5 @@ const BlogLink = ({ file }) => {
 };
 
 export default BlogLink;
-    
-{
-  /* <Card sx={{ maxWidth: 345 }}>
-  
-    <Button size="small">Share</Button>
-    <Button size="small">Learn More</Button>
-  </CardActions>
-</Card>; */
-}
+
+

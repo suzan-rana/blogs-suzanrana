@@ -9,8 +9,8 @@ const Blogs = ({ allFiles }) => {
   return (
     <>
       <Container maxWidth="md">
-        <Typography variant="h2" fontSize='3rem' gutterBottom marginTop='10rem'>
-          SuzanRana --blogs
+        <Typography variant="h2" fontSize="3rem" gutterBottom marginTop="10rem">
+          {/* SuzanRana --blogs */}
         </Typography>
         <Grid container>
           {allFiles.map((file) => (
@@ -18,7 +18,7 @@ const Blogs = ({ allFiles }) => {
           ))}
         </Grid>
       </Container>
-    </>
+    </> 
   );
 };
 
