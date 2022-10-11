@@ -1,20 +1,51 @@
 import React from 'react'
-
-const BlogDetail = () => {
+import fs from 'fs'
+import path from 'path'
+import matter from 'gray-matter'
+import { serialize } from 'next-mdx-remote/serialize'
+import { MDXRemote } from 'next-mdx-remote'
+import  SyntaxHighlighter from 'react-syntax-highlighter'
+import { Container } from '@mui/material'
+const components = { SyntaxHighlighter }
+const BlogDetail = ({ frontMatter, mdxSource}) => {
   return (
-    <div>BlogDetail</div>
+    <Container maxWidth="md">
+       <MDXRemote {...mdxSource} components={components}/>
+    </Container>
   )
 }
 
 export default BlogDetail;
 
-// "@mdx-js/loader": "^1.6.22",
-// "@next/mdx": "^11.0.1",
-// "gray-matter": "^4.0.3",
-// "marked": "^2.1.3",
-// "next": "11.0.1",
-// "next-mdx-remote": "^3.0.4",
-// "react": "17.0.2",
-// "react-dom": "17.0.2",
-// "react-syntax-highlighter": "^15.4.4"
-// npm i @mdx-js/loader @next/mdx gray-matter marked react-syntax-highlighter
+const getStaticPaths = async () => {
+      const files = fs.readdirSync(path.join('blogs'))
+      const paths = files.map( fileName => {
+        return{
+          params: {
+            slug: fileName.split('.')[0]
+          }
+        }
+      })
+      return {
+        paths,
+        fallback: false,
+      }
+}
+const getStaticProps = async ({ params: { slug }}) => {
+    const markDownWithMeta = fs.readFileSync(path.join('blogs', `${slug}.mdx`), 'utf-8')
+    const { data: frontMatter, content} = matter(markDownWithMeta)
+    const mdxSource = await serialize(content)
+
+    return{
+      props: {
+        frontMatter,
+        slug,
+        mdxSource
+
+      }
+    }
+ 
+
+}
+
+export { getStaticPaths, getStaticProps}  
